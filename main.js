@@ -4,7 +4,6 @@ function BST(value){
   this.right = null;
 }
 
-// BREATH FIRST TRAVERAL
 // INSERT
 BST.prototype.insert = function(value) {
 
@@ -81,6 +80,27 @@ BST.prototype.depthFirstTraveral = function(iteratorFunc, order){
   }
 }
 
+
+// BREADTH FIRST TRAVERSAL
+BST.prototype.breadthFirstTraversal = function(iteratorFunc){
+  // THIS refers to the root node of the binary search tree
+  const queue = [this];
+
+  while(queue.length){
+    let treeNode = queue.shift();
+
+    iteratorFunc(treeNode);
+    if (treeNode.left){
+      queue.push(treeNode.left)
+    }
+    if (treeNode.right){
+      queue.push(treeNode.right)
+    }
+  }
+}
+
+
+
 const bst = new BST(50);
 
 bst.insert(30);
@@ -95,8 +115,9 @@ bst.insert(59);
 bst.insert(85);
 bst.insert(105);
 
-bst.depthFirstTraveral(log, "post-order");
 
-function log(value) {
-  console.log(value);
+function log(node) {
+  console.log(node.value);
 }
+
+bst.breadthFirstTraversal(log)
