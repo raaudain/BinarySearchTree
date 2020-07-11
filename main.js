@@ -4,6 +4,7 @@ function BST(value){
   this.right = null;
 }
 
+// BREATH FIRST TRAVERAL
 // INSERT
 BST.prototype.insert = function(value) {
 
@@ -53,6 +54,33 @@ BST.prototype.contains = function(value) {
   }
 }
 
+
+// DEPTH FIRST TRAVERAL
+BST.prototype.depthFirstTraveral = function(iteratorFunc, order){
+  // PRE ORDER
+  // Used to make a copy of the tree
+  if (order === "pre-order"){
+    iteratorFunc(this.value);
+  }
+  if (this.left){
+    this.left.depthFirstTraveral(iteratorFunc, order);
+  }
+
+  // IN ORDER
+  if (order === "in-order"){
+    iteratorFunc(this.value);
+  }
+
+  // POST ORDER
+  // Used to safely delete node
+  if (this.right){
+    this.right.depthFirstTraveral(iteratorFunc, order);
+  }
+  if (order === "post-order"){
+    iteratorFunc(this.value)
+  }
+}
+
 const bst = new BST(50);
 
 bst.insert(30);
@@ -67,4 +95,8 @@ bst.insert(59);
 bst.insert(85);
 bst.insert(105);
 
-console.log(bst.contains(50))
+bst.depthFirstTraveral(log, "post-order");
+
+function log(value) {
+  console.log(value);
+}
